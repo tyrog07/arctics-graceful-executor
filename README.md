@@ -19,8 +19,11 @@
 1. [Introduction](#introduction)
 2. [Features](#features)
 3. [Installation](#installation)
-4. [Contributing](#contributing)
-5. [License](#license)
+4. [Usage](#usage)
+5. [Examples](#examples)
+6. [API Reference](#api-reference)
+7. [Contributing](#contributing)
+8. [License](#license)
 
 ## Introduction
 
@@ -47,6 +50,142 @@ or
 ```bash
 yarn add @arctics/graceful-executor
 ```
+
+## Usage
+
+### Importing the Library
+
+The library supports both CommonJS and ES Modules:
+
+- CommonJS:
+
+```
+const { safeExecute, configureSafeExecute } = require('@arctics/graceful-executor');
+```
+
+- ES Modules:
+
+```
+import { safeExecute, configureSafeExecute } from '@arctics/graceful-executor';
+```
+
+### Configuration
+
+You can configure global behavior for `safeExecute` using `configureSafeExecute`. This allows you to set a global error handler and a default fallback value.
+
+```
+import { configureSafeExecute } from '@arctics/graceful-executor';
+
+configureSafeExecute({
+  errorHandler: (error) => console.error('Global Error:', error),
+  defaultValue: 'default value',
+});
+```
+
+## Examples
+
+### Synchronous Example
+
+```
+import { safeExecute } from '@arctics/graceful-executor';
+
+function syncFunction() {
+  if (Math.random() > 0.5) {
+    throw new Error('Random sync error');
+  }
+  return 'Sync success';
+}
+
+const [error, result] = safeExecute(syncFunction);
+
+if (error) {
+  console.error('Sync Error:', error.message);
+} else {
+  console.log('Sync Result:', result);
+}
+```
+
+### Asynchronous Example
+
+```
+import { safeExecute } from '@arctics/graceful-executor';
+
+async function asyncFunction() {
+  if (Math.random() > 0.5) {
+    throw new Error('Random async error');
+  }
+  return 'Async success';
+}
+
+(async () => {
+  const [error, result] = await safeExecute(asyncFunction);
+
+  if (error) {
+    console.error('Async Error:', error.message);
+  } else {
+    console.log('Async Result:', result);
+  }
+})();
+```
+
+### Custom Error Handler and Fallback Value
+
+You can override the global configuration for specific calls:
+
+```
+import { safeExecute } from '@arctics/graceful-executor';
+
+function riskyFunction() {
+  throw new Error('Something went wrong');
+}
+
+const [error, result] = safeExecute(riskyFunction, {
+  errorHandler: (error) => console.warn('Custom Error Handler:', error),
+  defaultValue: 'Custom fallback value',
+});
+
+console.log('Result:', result); // Logs: 'Custom fallback value'
+```
+
+### Finally Callback
+
+You can also provide a `finally` callback that runs regardless of success or failure:
+
+```
+import { safeExecute } from '@arctics/graceful-executor';
+
+function exampleFunction() {
+  throw new Error('Example error');
+}
+
+safeExecute(exampleFunction, {
+  finally: () => console.log('Cleanup logic executed'),
+});
+```
+
+## API Reference
+
+### `safeExecute(fn, options?)`
+
+Safely executes a function and returns a tuple `[error, result]`.
+
+- `Parameters`:
+  - `fn`: The function to execute (can be synchronous or asynchronous).
+  - `options` (optional): An object with the following properties:
+    - `errorHandler`: A custom error handler for this specific call.
+    - `defaultValue`: A fallback value to return if an error occurs.
+    - `finally`: A callback function to execute after the operation.
+
+- `Returns`: A tuple `[error, result]`.
+
+### `configureSafeExecute(config)`
+
+Configures global behavior for `safeExecute`.
+
+- `Parameters`:
+  - `config`: An object with the following properties:
+    - `errorHandler`: A global error handler.
+    - `defaultValue`: A global fallback value.
 
 ## Contributing
 

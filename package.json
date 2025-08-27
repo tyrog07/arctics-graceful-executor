@@ -2,13 +2,20 @@
   "name": "@arctics/graceful-executor",
   "description": "A robust utility for safely executing async functions with centralized error handling and fallback values.",
   "author": "Rajat Ninawe",
-  "version": "0.0.1-dev",
+  "version": "1.0.0",
   "homepage": "https://github.com/tyrog07/graceful-executor",
   "repository": "tyrog07/graceful-executor",
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
   "license": "MIT",
   "files": [
     "dist"
@@ -49,6 +56,21 @@
     "error-handling",
     "async-await",
     "typescript",
-    "utility"
+    "utility",
+    "error-handling-utility",
+    "try-catch-wrapper",
+    "promise-wrapper",
+    "typescript-library",
+    "error-management",
+    "async-error-handling",
+    "function-wrapper",
+    "safe-function-execution",
+    "error-recovery",
+    "graceful-error-handling",
+    "fallback-values",
+    "utility-library",
+    "typescript-utility",
+    "robust-error-handling",
+    "error-handler"
   ]
 }

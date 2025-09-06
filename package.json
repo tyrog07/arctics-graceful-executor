@@ -2,9 +2,12 @@
   "name": "@arctics/graceful-executor",
   "description": "A robust utility for safely executing async functions with centralized error handling and fallback values.",
   "author": "Rajat Ninawe",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/tyrog07/graceful-executor",
-  "repository": "tyrog07/graceful-executor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyrog07/graceful-executor.git"
+  },
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -12,8 +15,7 @@
   "exports": {
     ".": {
       "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js",
-      "types": "./dist/types/index.d.ts"
+      "import": "./dist/esm/index.js"
     }
   },
   "license": "MIT",
